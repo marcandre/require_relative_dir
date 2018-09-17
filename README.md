@@ -1,10 +1,39 @@
 # RequireRelativeDir
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/require_relative_dir`. To experiment with that code, run `bin/console` for an interactive prompt.
+Simple utility to `require` all Ruby files in a given directory.
 
-TODO: Delete this and the text above, and describe your gem
+## Usage
+
+```
+# lib/your_gem_or_app.rb
+require 'require_relative_dir'
+
+module YourGemOrApp
+  extend RequireRelativeDir
+
+  require_relative_dir # or pass 'your_gem_or_app' to be more explicit
+end
+
+# lib/your_gem_or_app/whatever.rb
+
+require 'some_gem'
+require 'some_other_gem'
+
+module YourGemOrApp
+  require_relative_dir 'concerns'  # requires all of 'your_gem_or_app/concerns/'
+  require_relative_dir 'utils', except: 'big_and_unused_for_now'
+
+  class Whatever
+    # ...
+  end
+end
+```
+
+Alternatively, you could call `extend RequireRelativeDir` at the top level but that is not recommended as it might conflict one day with a builtin version (see for example [this discussion](https://bugs.ruby-lang.org/issues/14927)). It might not be exactly equivalent too.
 
 ## Installation
+
+Nothing special.
 
 Add this line to your application's Gemfile:
 
@@ -16,13 +45,6 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install require_relative_dir
-
-## Usage
-
-TODO: Write usage instructions here
 
 ## Development
 
