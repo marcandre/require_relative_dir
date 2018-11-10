@@ -1,6 +1,6 @@
 # RequireRelativeDir
 
-Simple utility to `require` all Ruby files in a given directory.
+Simple utility to `require_relative` all Ruby files in a given directory.
 
 ## Usage
 
