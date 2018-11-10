@@ -4,7 +4,7 @@ Simple utility to `require` all Ruby files in a given directory.
 
 ## Usage
 
-```
+```ruby
 # lib/your_gem_or_app.rb
 require 'require_relative_dir'
 
@@ -43,8 +43,9 @@ gem 'require_relative_dir'
 
 And then execute:
 
-    $ bundle
-
+```sh
+$ bundle
+```
 
 ## Development
 
