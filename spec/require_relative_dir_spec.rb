@@ -9,9 +9,8 @@ RSpec.describe RequireRelativeDir do
   end
 
   let(:dirname) { nil }
-  let(:except)  { nil }
-  let(:arguments) { [dirname, ({except: except} if except)].compact }
-  let(:required) { call_require_relative_dir(*arguments) } # Defined in fixtures/example.rb
+  let(:options)  { {} }
+  let(:required) { call_require_relative_dir(*dirname, **options) } # Defined in fixtures/example.rb
 
   subject { required }
 
@@ -24,7 +23,7 @@ RSpec.describe RequireRelativeDir do
 
     ['s1', 's1.rb', Pathname('s1'), :s1, %w[s1 s1]].each do |except|
       describe "when given except: #{except.inspect}" do
-        let(:except) { except }
+        let(:options) { {except: except} }
         it { should == [
           "#{__dir__}/fixtures/example/sub/s2.rb",
         ]}
@@ -39,8 +38,8 @@ RSpec.describe RequireRelativeDir do
       "#{__dir__}/fixtures/example/c.rb",
     ]}
 
-    describe 'when given an expect argument' do
-      let(:except) { %w[b c] }
+    describe 'when given an except argument' do
+      let(:options) { {except: %w[b c]} }
       it { should == [
         "#{__dir__}/fixtures/example/a.rb",
       ]}
@@ -60,7 +59,7 @@ RSpec.describe RequireRelativeDir do
     subject { -> { required } }
 
     describe 'when given an invalid except' do
-      let(:except) { %w[a.rb nonexistent] }
+      let(:options) { {except: %w[a.rb nonexistent]} }
       it { should raise_error(ArgumentError) }
     end
 
