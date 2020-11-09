@@ -8,6 +8,34 @@ Simple utility to `require_relative` all Ruby files in a given directory.
 # lib/your_gem_or_app.rb
 require 'require_relative_dir'
 
+using RequireRelativeDir
+
+require_relative_dir # or pass 'your_gem_or_app' to be more explicit
+
+# lib/your_gem_or_app/whatever.rb
+
+require 'some_gem'
+require 'some_other_gem'
+
+using RequireRelativeDir
+
+require_relative_dir 'concerns'  # requires all of 'your_gem_or_app/concerns/'
+require_relative_dir 'utils', except: 'big_and_unused_for_now'
+
+class Whatever
+  # ...
+end
+```
+
+### Legacy usage
+
+While the above usage with `using` is the recommended way, the method `require_relative_dir`
+is also avaible with `extend RequireRelativeDir`. For example:
+
+```ruby
+# lib/your_gem_or_app.rb
+require 'require_relative_dir'
+
 module YourGemOrApp
   extend RequireRelativeDir
 

@@ -13,13 +13,19 @@ module RequireRelativeDir
     raise LoadError, "Directory '#{path}' not found" unless Dir.exist?(path)
 
     paths = Dir["#{path}/*.rb"].sort
-    paths = remove_exceptions(paths, except) if except
+    paths = RequireRelativeDir.remove_exceptions(paths, except) if except
     paths.each { |file| require file }
+  end
+
+  refine Object do
+    include RequireRelativeDir
+    private :require_relative_dir
   end
 
   extend self
 
-  private def remove_exceptions(paths, except)
+  # @api private
+  def self.remove_exceptions(paths, except)
     except = Array(except).map(&:to_s)
     except.map! { |exception| File.extname(exception) == '.rb' ? exception[0...-3] : exception }
     paths.reject { |file| except.delete File.basename(file, '.rb') }
