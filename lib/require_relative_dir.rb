@@ -1,4 +1,6 @@
-require "require_relative_dir/version"
+# frozen_string_literal: true
+
+require 'require_relative_dir/version'
 
 module RequireRelativeDir
   SAME_AS_CALLER_NAME = Object.new
@@ -9,6 +11,7 @@ module RequireRelativeDir
     base_path = File.dirname(caller_path)
     path = File.expand_path("#{base_path}/#{dir_name}")
     raise LoadError, "Directory '#{path}' not found" unless Dir.exist?(path)
+
     paths = Dir["#{path}/*.rb"].sort
     paths = remove_exceptions(paths, except) if except
     paths.each { |file| require file }
