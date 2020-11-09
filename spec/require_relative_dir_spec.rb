@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'pathname'
 require_relative 'fixtures/example'
 
 RSpec.describe RequireRelativeDir do
-  it "has a version number" do
+  it 'has a version number' do
     expect(RequireRelativeDir::VERSION).not_to be nil
   end
 
@@ -20,7 +22,7 @@ RSpec.describe RequireRelativeDir do
       "#{__dir__}/fixtures/example/sub/s2.rb",
     ]}
 
-    ['s1', 's1.rb', Pathname('s1'), :s1, ['s1', 's1']].each do |except|
+    ['s1', 's1.rb', Pathname('s1'), :s1, %w[s1 s1]].each do |except|
       describe "when given except: #{except.inspect}" do
         let(:except) { except }
         it { should == [
@@ -32,9 +34,9 @@ RSpec.describe RequireRelativeDir do
 
   describe 'when not given any directory name' do
     it { should == [
-        "#{__dir__}/fixtures/example/a.rb",
-        "#{__dir__}/fixtures/example/b.rb",
-        "#{__dir__}/fixtures/example/c.rb",
+      "#{__dir__}/fixtures/example/a.rb",
+      "#{__dir__}/fixtures/example/b.rb",
+      "#{__dir__}/fixtures/example/c.rb",
     ]}
 
     describe 'when given an expect argument' do
@@ -48,9 +50,9 @@ RSpec.describe RequireRelativeDir do
   describe 'when the a directory name of "."' do
     let(:dirname) { '.' }
     it { should == [
-        "#{__dir__}/fixtures/example.rb",
-        "#{__dir__}/fixtures/f1.rb",
-        "#{__dir__}/fixtures/f2.rb",
+      "#{__dir__}/fixtures/example.rb",
+      "#{__dir__}/fixtures/f1.rb",
+      "#{__dir__}/fixtures/f2.rb",
     ]}
   end
 
