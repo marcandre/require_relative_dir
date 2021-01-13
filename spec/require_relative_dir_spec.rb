@@ -38,9 +38,27 @@ RSpec.describe RequireRelativeDir do
       "#{__dir__}/fixtures/example/c.rb",
     ]}
 
-    describe 'when given an except argument' do
+    describe 'when given an `except` argument' do
       let(:options) { {except: %w[b c]} }
       it { should == [
+        "#{__dir__}/fixtures/example/a.rb",
+      ]}
+    end
+
+    describe 'when given a `first` argument' do
+      let(:options) { {first: 'b'} }
+      it { should == [
+        "#{__dir__}/fixtures/example/b.rb",
+        "#{__dir__}/fixtures/example/a.rb",
+        "#{__dir__}/fixtures/example/c.rb",
+      ]}
+    end
+
+    describe 'when given a `first` argument (array)' do
+      let(:options) { {first: %w[c.rb b]} }
+      it { should == [
+        "#{__dir__}/fixtures/example/c.rb",
+        "#{__dir__}/fixtures/example/b.rb",
         "#{__dir__}/fixtures/example/a.rb",
       ]}
     end
