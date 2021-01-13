@@ -21,11 +21,16 @@ using RequireRelativeDir
 
 require_relative_dir 'concerns'  # requires all of 'your_gem_or_app/concerns/'
 require_relative_dir 'utils', except: 'big_and_unused_for_now'
+require_relative_dir 'tools', first: 'base'
 
 class Whatever
   # ...
 end
 ```
+
+Options:
+* `except`: files to exclude
+* `first`: files to load before the rest
 
 ### Legacy usage
 
