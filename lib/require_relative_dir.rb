@@ -16,7 +16,11 @@ module RequireRelativeDir
   end
 
   refine Object do
-    include RequireRelativeDir
+    if respond_to?(:import_methods, true)
+      import_methods RequireRelativeDir
+    else
+      include RequireRelativeDir
+    end
     private :require_relative_dir
   end
 
